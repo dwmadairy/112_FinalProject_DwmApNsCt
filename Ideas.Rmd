@@ -1,0 +1,12 @@
+---
+title: "Ideas"
+author: "Will Madairy"
+date: "10/31/2019"
+output: html_document
+---
+
+IDEAS:
+
+-Mapping of where most deaths occur
+-Ramifications of Climbing Traffic
+-Largest Factors that drive death on the mountain
