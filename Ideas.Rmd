@@ -29,12 +29,12 @@ write.csv(climberdata, file = "climber.csv")
 ```
 
 ```{r}
-climber_Data_csv <- read_csv("climber.csv")
+climber <- read_csv("climber.csv")
 ```
 
 This dataset includes data from over 10,000 climbs of high summits around the world. First, we made a graph showing the interquartile range of highest point reached during the climb, separated by climbers who reached or did not reach the summit
 ```{r}
-climberdata %>%
+climber %>%
   ggplot(aes(x = SUCCESS1, y = HIGHPOINT)) +
   geom_boxplot() +
   labs(x = "Ascent Success?", y = "Highest Point Reached, Meters", title = "How Far Did Climbers Make It?", subtitle = "based on success or failure of summit")
@@ -42,14 +42,14 @@ climberdata %>%
 
 We next looked at a variable that shows whether the climbers used oxygen to assist them in ascending to the summit. We found that just over 40% of successfull summiters used oxygen.
 ```{r}
-climberdata %>%
+climber %>%
   filter(SUCCESS1 == TRUE) %>%
   summarise(prop_o2 = sum(O2USED == TRUE)/sum(n()))
 ```
 
 We also looked at how many days it took for successful summiters to achieve the summit. We see a predicted positive relationship in the graph. We also see bunches of data at equal "highest point" numbers, showing that there is lots of data for these specific peaks. We plan to investigate these peaks further.
 ```{r}
-climberdata %>%
+climber %>%
   filter(SUCCESS1 == TRUE) %>%
   ggplot(aes(x = HIGHPOINT, y = SMTDAYS)) +
   geom_point() +
@@ -66,5 +66,5 @@ write.csv(peaksdata, file = "peaks.csv")
 ```
 
 ```{r}
-peaks_data_csv <- read_csv("peaks.csv")
+peaks <- read_csv("peaks.csv")
 ```
