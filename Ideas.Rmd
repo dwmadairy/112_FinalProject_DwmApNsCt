@@ -20,11 +20,11 @@ library(ggplot2)
 library(readr)
 ```
 
-```{r warning=FALSE}
+```{r eval=FALSE}
 climberdata <- read.dbf("/Users/andrew/Desktop/STAT112/HIMDATA/exped.DBF")
 ```
 
-```{r}
+```{r eval=FALSE}
 write.csv(climberdata, file = "climber.csv")
 ```
 
