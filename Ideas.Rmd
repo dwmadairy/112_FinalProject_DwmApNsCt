@@ -17,10 +17,19 @@ Using a data set with climbers on famous peaks
 library(foreign)
 library(tidyverse)
 library(ggplot2)
+library(readr)
 ```
 
 ```{r warning=FALSE}
 climberdata <- read.dbf("/Users/andrew/Desktop/STAT112/HIMDATA/exped.DBF")
+```
+
+```{r}
+write.csv(climberdata, file = "climber.csv")
+```
+
+```{r}
+climber_Data_csv <- read_csv("climber.csv")
 ```
 
 This dataset includes data from over 10,000 climbs of high summits around the world. First, we made a graph showing the interquartile range of highest point reached during the climb, separated by climbers who reached or did not reach the summit
@@ -50,4 +59,12 @@ climberdata %>%
 In progressing with our project, we plan to use a join function to join the previous dataset with the dataset below, which shows the specific peaks these climbers are attempting to summit. Both datasets share a PEAKID variable.
 ```{r}
 peaksdata <- read.dbf("/Users/andrew/Desktop/STAT112/HIMDATA/peaks.DBF")
+```
+
+```{r}
+write.csv(peaksdata, file = "peaks.csv")
+```
+
+```{r}
+peaks_data_csv <- read_csv("peaks.csv")
 ```
