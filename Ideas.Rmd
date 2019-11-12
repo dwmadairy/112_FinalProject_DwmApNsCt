@@ -57,11 +57,11 @@ climberdata %>%
 ```
 
 In progressing with our project, we plan to use a join function to join the previous dataset with the dataset below, which shows the specific peaks these climbers are attempting to summit. Both datasets share a PEAKID variable.
-```{r}
+```{r eval=FALSE}
 peaksdata <- read.dbf("/Users/andrew/Desktop/STAT112/HIMDATA/peaks.DBF")
 ```
 
-```{r}
+```{r eval=FALSE}
 write.csv(peaksdata, file = "peaks.csv")
 ```
 
