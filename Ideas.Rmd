@@ -21,11 +21,11 @@ library(readr)
 ```
 
 ```{r eval=FALSE}
-climberdata <- read.dbf("/Users/andrew/Desktop/STAT112/HIMDATA/exped.DBF")
+##climberdata <- read.dbf("/Users/andrew/Desktop/STAT112/HIMDATA/exped.DBF")
 ```
 
 ```{r eval=FALSE}
-write.csv(climberdata, file = "climber.csv")
+##write.csv(climberdata, file = "climber.csv")
 ```
 
 ```{r}
