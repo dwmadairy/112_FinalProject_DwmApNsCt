@@ -1,0 +1,12 @@
+name: MadairyShinyApp
+title: MadairyShinyApp
+username:
+account: dwmadairy
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1474572
+bundleId: 2590328
+url: https://dwmadairy.shinyapps.io/MadairyShinyApp/
+when: 1573768092.80079
+asMultiple: FALSE
+asStatic: FALSE
