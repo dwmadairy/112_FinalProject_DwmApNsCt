@@ -68,3 +68,8 @@ write.csv(peaksdata, file = "peaks.csv")
 ```{r}
 peaks <- read_csv("peaks.csv")
 ```
+
+
+We could look at deaths with relation to whether oxygen was used, whether a sherpa was hired (NOHIRED), and whether the number of people in their party affected how many people died.
+
+We could also use the tools we learned with "Regex" to look at strings of certain words in the "accident" comments, such as "fall", or "frostbite", because these comments are where a lot of interesting information is that we cannot quantify into a variable. 
