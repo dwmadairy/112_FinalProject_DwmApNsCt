@@ -29,3 +29,15 @@ climberpeakold <- climber %>%
 climberpeak <- write_csv(climberpeakold, "climberpeak.csv")
 ```
 
+```{r}
+climberpeak %>% 
+  group_by(PKNAME, YEAR)
+```
+
+```{r}
+climberpeak %>% 
+  group_by(PKNAME) %>% 
+  summarize(expeds = sum(n())) %>% 
+  arrange(desc(expeds))
+```
+
