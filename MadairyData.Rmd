@@ -30,8 +30,35 @@ climberpeak <- write_csv(climberpeakold, "climberpeak.csv")
 ```
 
 ```{r}
- climberpeak %>%
-      group_by(PKNAME, YEAR) %>%
-      summarise(expeditions = sum(n()))
+climberpeak %>% 
+  group_by(PKNAME, YEAR)
+```
+```{r}
+climberpeak %>% 
+  mutate(pctcomplete = HIGHPOINT/HEIGHTM)
+```
+
+
+```{r}
+manyexpeds<-climberpeak %>% 
+  group_by(PKNAME) %>% 
+  mutate(expeds = sum(n())) %>% 
+  filter(expeds > 5) %>% 
+  ungroup()
+```
+
+```{r}
+manyexpeds %>% 
+  group_by(PKNAME) %>% 
+  summarize(expeds=sum(n())) %>% 
+  arrange(desc(expeds))
+```
+
+```{r eval=FALSE}
+climberpeak %>% 
+  group_by(YEAR, PKNAME)
+  summarize(avgcomplete = mean(pctcomplete)) %>% 
+  ggplot(aes(x=YEAR, y=avgcomplete))+
+  geom_line()
 ```
 
