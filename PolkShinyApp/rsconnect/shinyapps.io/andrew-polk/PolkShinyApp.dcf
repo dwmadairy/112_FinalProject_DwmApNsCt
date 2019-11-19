@@ -1,0 +1,12 @@
+name: PolkShinyApp
+title: PolkShinyApp
+username:
+account: andrew-polk
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1479932
+bundleId: 2593057
+url: https://andrew-polk.shinyapps.io/PolkShinyApp/
+when: 1573861200.44624
+asMultiple: FALSE
+asStatic: FALSE
