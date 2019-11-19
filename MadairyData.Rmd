@@ -43,6 +43,8 @@ manyexpeds<-climberpeak %>%
 ```
 
 ```{r}
-
+manyexpeds %>% 
+  group_by(PKNAME) %>% 
+  summarize(expeds=sum(n())) 
 ```
 
