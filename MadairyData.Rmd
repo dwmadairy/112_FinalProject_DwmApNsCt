@@ -35,9 +35,14 @@ climberpeak %>%
 ```
 
 ```{r}
-climberpeak %>% 
+manyexpeds<-climberpeak %>% 
   group_by(PKNAME) %>% 
-  summarize(expeds = sum(n())) %>% 
-  arrange(desc(expeds))
+  mutate(expeds = sum(n())) %>% 
+  filter(expeds > 5) %>% 
+  ungroup()
+```
+
+```{r}
+
 ```
 
