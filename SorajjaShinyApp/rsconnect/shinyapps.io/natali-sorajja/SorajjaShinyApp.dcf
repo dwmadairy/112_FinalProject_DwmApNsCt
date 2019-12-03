@@ -1,0 +1,12 @@
+name: SorajjaShinyApp
+title: SorajjaShinyApp
+username:
+account: natali-sorajja
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1507159
+bundleId: 2607482
+url: https://natali-sorajja.shinyapps.io/SorajjaShinyApp/
+when: 1574354218.07821
+asMultiple: FALSE
+asStatic: FALSE

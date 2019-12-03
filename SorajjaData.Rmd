@@ -1,0 +1,41 @@
+---
+title: "SorajjaData"
+author: "Natali Sorajja"
+date: "November 19, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(foreign)
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(corrplot)
+library(RColorBrewer)
+
+```
+
+
+```{r}
+climber_stripped <- climberpeak %>%
+  select(SMTDAYS, TOTDAYS, HIGHPOINT, TOTMEMBERS, MDEATHS, CAMPS, SMTMEMBERS, SEASON, YEAR, SKI, TRAVERSE)
+M <-cor(climber_stripped, use="pairwise.complete.obs")
+
+corrplot(M, type="upper",
+         col=brewer.pal(n=8, name="BuPu"))
+```
+
+```{r}
+climber <- read.csv("climber.csv")
+```
+
+```{r}
+peaks <- read_csv("peaks.csv")
+```
+
+
+```{r}
+climberpeak <- read_csv("~/Documents/Stat112/FinalProjectApp/climberpeak.csv")
+View(climberpeak)
+```
+

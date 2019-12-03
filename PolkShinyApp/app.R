@@ -23,7 +23,7 @@ server <- function(input, output) {
       group_by(PKNAME, YEAR) %>%
       summarise(expeditions = sum(n())) %>%
       ggplot()+
-      geom_line(aes(x = YEAR, y = expeditions)) +
+      geom_col(aes(x = YEAR, y = expeditions)) +
       scale_x_continuous(limit = input$Years)
   })
 }
