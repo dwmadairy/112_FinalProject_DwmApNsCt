@@ -34,7 +34,7 @@ climberpeak %>%
   group_by(PKNAME, YEAR)
 ```
 ```{r}
-climberpeak %>% 
+climberpeak2 <- climberpeak %>% 
   mutate(pctcomplete = HIGHPOINT/HEIGHTM)
 ```
 
@@ -55,8 +55,8 @@ manyexpeds %>%
 ```
 
 ```{r eval=FALSE}
-climberpeak %>% 
-  group_by(YEAR, PKNAME)
+climberpeak2 %>% 
+  group_by(YEAR) %>% 
   summarize(avgcomplete = mean(pctcomplete)) %>% 
   ggplot(aes(x=YEAR, y=avgcomplete))+
   geom_line()
