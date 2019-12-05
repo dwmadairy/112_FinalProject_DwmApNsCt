@@ -55,7 +55,7 @@ manyexpeds<-climberpeak %>%
 ```{r}
 manyexpeds %>% 
   group_by(PKNAME) %>% 
-  summarize(expeds=sum(n())) %>% 
+  summarize(expeds=sum(n()), success_rate = sum(SUCCESS1)/expeds) %>% 
   arrange(desc(expeds))
 
 ```
