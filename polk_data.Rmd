@@ -1,0 +1,61 @@
+---
+title: "polk_data"
+author: "Andrew Polk"
+date: "12/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(foreign)
+library(tidyverse)
+library(ggplot2)
+library(readr)
+```
+
+
+```{r}
+climber <- read.csv("climber.csv")
+```
+
+
+```{r warning=FALSE message = FALSE}
+peaks <- read_csv("peaks.csv")
+```
+
+```{r}
+climberpeakold <- climber %>% 
+  left_join(peaks, by = "PEAKID")
+```
+```{r}
+climberpeak <- write_csv(climberpeakold, "climberpeak.csv")
+```
+
+```{r}
+climberpeak %>% 
+  group_by(PKNAME, YEAR)
+```
+```{r}
+climberpeak2 <- climberpeak %>% 
+  mutate(pctcomplete = HIGHPOINT/HEIGHTM)
+```
+
+
+```{r}
+manyexpeds<-climberpeak %>% 
+  group_by(PKNAME) %>% 
+  mutate(expeds = sum(n())) %>% 
+  filter(expeds > 5) %>% 
+  ungroup()
+```
+
+```{r}
+manyexpeds %>% 
+  group_by(PKNAME) %>% 
+  summarize(expeds=sum(n())) %>% 
+  arrange(desc(expeds))
+
+```
