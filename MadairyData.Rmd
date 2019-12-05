@@ -62,3 +62,68 @@ climberpeak2 %>%
   geom_line()
 ```
 
+```{r}
+write.csv(climberpeak2, file="climberpeakV2.csv")
+```
+
+TERM Reasons:
+
+0. 
+1. Success
+2. 
+3. Disputed or Illegeal summit
+4. Poor Weather, and related issues
+5. Avalanche/Snow Fall
+6. Fatality
+7. 
+8. 
+9. Lack of time or too late in day
+12. Did not attempt climb
+14. Unknown or misc. 
+  Largest issues are issues with Chines Gov, Sherpa strike, and Nepal earthquake
+
+```{r}
+climberpeak2 %>% 
+  filter(PKNAME=="Everest") %>% 
+  ggplot()+
+  geom_bar(aes(x=TERMREASON))
+```
+
+```{r}
+rsns = c(3 ,4, 5, 6 , 9 ,14)
+
+climberpeak2 %>% 
+  filter(PKNAME=="Everest" ) %>% 
+  filter (TERMREASON %in% rsns) %>% 
+  ggplot(aes(x=YEAR, y=HIGHPOINT,  color=factor(TERMREASON))) +
+  geom_point()+
+  geom_line(y=8848, color="red") 
+```
+
+```{r}
+manyexpeds %>% 
+  group_by(PKNAME) %>% 
+  summarize(expeds=sum(n()), success_rate = sum(SUCCESS1)/expeds) %>% 
+  arrange(desc(success_rate))
+
+```
+
+```{r}
+climberpeak2 %>% 
+  filter(PKNAME=="Jannu East") %>% 
+  filter(TERMREASON==14)
+```
+
+```{r}
+climberpeak2 %>% 
+  filter(PKNAME=="Nuptse") %>% 
+  ggplot()+
+  geom_bar(aes(x=TERMREASON))
+```
+
+```{r}
+climberpeak2 %>% 
+  filter(PKNAME=="Nuptse") %>% 
+  filter(TERMREASON==6)
+```
+
