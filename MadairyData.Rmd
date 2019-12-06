@@ -100,6 +100,9 @@ climberpeak2 %>%
   geom_line(y=8848, color="red") 
 ```
 
+Table explanation
+
+
 ```{r}
 manyexpeds %>% 
   group_by(PKNAME) %>% 
@@ -126,4 +129,5 @@ climberpeak2 %>%
   filter(PKNAME=="Nuptse") %>% 
   filter(TERMREASON==6)
 ```
+
 
