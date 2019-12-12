@@ -10,6 +10,18 @@ runtime: shiny
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r, message=FALSE, echo=FALSE}
+library(shiny)
+library(foreign)
+library(tidyverse)
+library(ggplot2)
+library(readr)
+```
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+peaks <- read_csv("peaks.csv")
+climber <- read_csv("climber.csv")
+```
 
 ## Introduction
 In our project, we analyzed a robust dataset of Himalayan mountain expeditions. We were inspired to explore this field after reading numerous news articles about several factors making these expeditions more dangerous. Sherpa strikes, overcrowding on peaks, and especially climate change make these already harrowing journeys even more treacherous. Our data allows us to explore expeditions on hundreds of peaks from 1905 through 2018, so our goal in this blogpost is to attempt to align the recent research with concrete data analysis.
@@ -27,6 +39,31 @@ First, it is important to show the amount of expeditions per year and which peak
 Another key introduction to the data is exploring where the climbers were from and how high each of them climbed over time.
 Altogether, people from 91 different nations have attempted to climb at least one of these peaks, according to this dataset. We made a visualization of how high each of these people climbed based on their country of origin.
 To reiterate, this dataset includes more than 450 peaks, even though some of them have only been attempted a few times. So, we found the top ten most popular peaks and used a Leaflet map to visualize the number of expeditions on these peaks as well as their summit success rate.
+
+
+
+```{r, echo=FALSE}
+nation <-
+  unique(climber$NATION) %>% 
+  str_split(pattern = '/') %>% 
+  unlist() %>% 
+  unique() %>% 
+  str_sort()
+```
+
+```{r, echo=FALSE}
+inputPanel(
+  selectInput("nations", "Nation of Origin", nation)
+  )
+
+renderPlot({
+    climber %>% 
+      filter(NATION == input$nations) %>% 
+      ggplot() +
+      geom_point(aes(YEAR, HIGHPOINT)) +
+      geom_smooth(aes(YEAR, HIGHPOINT))
+  })
+```
 
 
 
