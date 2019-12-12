@@ -19,6 +19,7 @@ library(tidyverse)
 library(ggplot2)
 library(readr)
 library(leaflet)
+library(knitr)
 ```
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
@@ -95,6 +96,21 @@ renderPlot({
       geom_smooth(aes(YEAR, HIGHPOINT))
   })
 ```
+
+
+```{r, warning = FALSE, message = FALSE}
+top_10_nations <-climberpeakV2 %>%
+  filter(YEAR >1980) %>%
+  group_by(NATION) %>% 
+  summarize(expeds=sum(n())) %>% 
+  #arrange(desc(expeds)) %>%
+  top_n(10) %>%
+  arrange(desc(expeds))
+
+kable(top_10_nations)
+```
+
+
 
 To reiterate, this dataset includes more than 450 peaks, even though some of them have only been attempted a few times. So, we found the top ten most popular peaks and used a Leaflet map to visualize the number of expeditions on these peaks as well as their summit success rate.
 
