@@ -33,7 +33,37 @@ Are recent factors like sherpa strikes, overcrowding, and climate change discour
 We utilized two datasets from “The Himalayan Database” in this project. Elizabeth Hawley began compiling an expedition archive for the Nepal Himalayan peaks in 1963, and this data set now contains over 450 peaks and over 10,000 expeditions. The main dataset we used contained these 10,000 expeditions, with several dozen variables to describe the expedition. We joined this dataset with another dataset that contained the names of the peaks the climbers’ explored, and we joined them through the common variable “Peak ID”. 
   
 ## Climbing Over Time
-First, it is important to show the amount of expeditions per year and which peaks are the most popular to climb within the dataset. Has climbing becoming more popular? Has reaching the peak become easier? 
+First, it is important to show the amount of expeditions per year and which peaks are the most popular to climb within the dataset. Has climbing becoming more popular? Has reaching the peak become easier?
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+climberpeakV2 <- read_csv("climberpeakV2.csv")
+
+```
+
+```{r, echo = FALSE}
+climberpeakV2 %>%
+  group_by(YEAR) %>%
+  mutate(expeds = sum(n())) %>%
+  ggplot(aes(x=YEAR, y = expeds)) + geom_line() + 
+  xlab("Year") + 
+  ylab("Expeditions") + 
+  ggtitle("Expeditions per Year")
+```
+
+
+```{r, echo = FALSE}
+climberpeakV2 %>%
+  group_by(YEAR) %>%
+  filter(YEAR > 1970) %>%
+  mutate(expeds = sum(n())) %>%
+  mutate(avg_complete = (mean(pctcomplete)*100)) %>%
+  ggplot(aes(x = YEAR, y = avg_complete)) + 
+  geom_point(aes(size = expeds)) + 
+  geom_line() +
+  ggtitle("Average Percent Complete Expeditions by Year") + 
+  xlab("Year") +
+  ylab("Average Percent Complete") 
+```
 
 ## Who Climbs and Where From?
 Another key introduction to the data is exploring where the climbers were from and how high each of them climbed over time.
