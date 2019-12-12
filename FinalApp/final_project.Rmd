@@ -1,7 +1,7 @@
 ---
-title: "final_project"
-author: "Charlie Thole"
-date: "12/3/2019"
+title: "The Himalayas: Understanding Summit Success"
+author: "Charlie Thole, Natali Sorajja, Andrew Polk, Will Madairy"
+date: "12/17/2019"
 output: html_document
 runtime: shiny
 ---
@@ -10,50 +10,24 @@ runtime: shiny
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This R Markdown document is made interactive using Shiny. Unlike the more traditional workflow of creating static reports, you can now create documents that allow your readers to change the assumptions underlying your analysis and see the results immediately. 
 
-To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
-
-## Inputs and Outputs
-
-You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change.  This demonstrates how a standard R plot can be made interactive by wrapping it in the Shiny `renderPlot` function. The `selectInput` and `sliderInput` functions create the input widgets used to drive the plot.
-
-```{r eruptions, echo=FALSE}
-inputPanel(
-  selectInput("n_breaks", label = "Number of bins:",
-              choices = c(10, 20, 35, 50), selected = 20),
+## Introduction
+In our project, we analyzed a robust dataset of Himalayan mountain expeditions. We were inspired to explore this field after reading numerous news articles about several factors making these expeditions more dangerous. Sherpa strikes, overcrowding on peaks, and especially climate change make these already harrowing journeys even more treacherous. Our data allows us to explore expeditions on hundreds of peaks from 1905 through 2018, so our goal in this blogpost is to attempt to align the recent research with concrete data analysis.
   
-  sliderInput("bw_adjust", label = "Bandwidth adjustment:",
-              min = 0.2, max = 2, value = 1, step = 0.2)
-)
-
-renderPlot({
-  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
-       xlab = "Duration (minutes)", main = "Geyser eruption duration")
+## Research Questions
+Are recent factors like sherpa strikes, overcrowding, and climate change discouraging climbers from summiting Himalayan peaks? Do these recent factors lead to more injuries or deaths?
+	
+## Data Collection/Description
+We utilized two datasets from “The Himalayan Database” in this project. Elizabeth Hawley began compiling an expedition archive for the Nepal Himalayan peaks in 1963, and this data set now contains over 450 peaks and over 10,000 expeditions. The main dataset we used contained these 10,000 expeditions, with several dozen variables to describe the expedition. We joined this dataset with another dataset that contained the names of the peaks the climbers’ explored, and we joined them through the common variable “Peak ID”. 
   
-  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
-  lines(dens, col = "blue")
-})
-```
+## Climbing Over Time
+First, it is important to show the amount of expeditions per year and which peaks are the most popular to climb within the dataset. Has climbing becoming more popular? Has reaching the peak become easier? 
 
-## Embedded Application
+## Who Climbs and Where From?
+Another key introduction to the data is exploring where the climbers were from and how high each of them climbed over time.
+Altogether, people from 91 different nations have attempted to climb at least one of these peaks, according to this dataset. We made a visualization of how high each of these people climbed based on their country of origin.
+To reiterate, this dataset includes more than 450 peaks, even though some of them have only been attempted a few times. So, we found the top ten most popular peaks and used a Leaflet map to visualize the number of expeditions on these peaks as well as their summit success rate.
 
-It's also possible to embed an entire Shiny application within an R Markdown document using the `shinyAppDir` function. This example embeds a Shiny application located in another directory:
-
-```{r tabsets, echo=FALSE}
-shinyAppDir(
-  system.file("examples/06_tabsets", package = "shiny"),
-  options = list(
-    width = "100%", height = 550
-  )
-)
-```
-
-Note the use of the `height` parameter to determine how much vertical space the embedded application should occupy.
-
-You can also use the `shinyApp` function to define an application inline rather then in an external directory.
-
-In all of R code chunks above the `echo = FALSE` attribute is used. This is to prevent the R code within the chunk from rendering in the document alongside the Shiny components.
 
 
 
