@@ -47,7 +47,7 @@ climberpeakV2 %>%
   ggplot(aes(x=YEAR, y = expeds)) + geom_line() + 
   xlab("Year") + 
   ylab("Expeditions") + 
-  ggtitle("Expeditions per Year")
+  ggtitle("Expeditions per Year") 
 ```
 
 
