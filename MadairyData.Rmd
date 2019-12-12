@@ -66,6 +66,8 @@ climberpeak2 %>%
 write.csv(climberpeak2, file="climberpeakV2.csv")
 ```
 
+
+
 TERM Reasons:
 
 0. 
@@ -75,9 +77,10 @@ TERM Reasons:
 4. Poor Weather, and related issues
 5. Avalanche/Snow Fall
 6. Fatality
-7. 
-8. 
+7. illness/injury
+8. Supplies Problem
 9. Lack of time or too late in day
+10. Difficulty in route
 12. Did not attempt climb
 14. Unknown or misc. 
   Largest issues are issues with Chines Gov, Sherpa strike, and Nepal earthquake
@@ -130,4 +133,87 @@ climberpeak2 %>%
   filter(TERMREASON==6)
 ```
 
+```{r}
+climberpeak2 %>% 
+  select(TERMREASON,TERMNOTE) %>% 
+  filter(TERMREASON==9) 
+```
+
+
+```{r}
+rsns = c(3 ,4, 5, 6 ,7, 9 ,14)
+
+climberpeak2 %>% 
+  group_by(YEAR, TERMREASON) %>% 
+  filter(TERMREASON %in% rsns) %>% 
+  summarize(expeds = sum(n())) %>% 
+  ggplot(aes(x=YEAR, y=expeds, group=factor(TERMREASON)))+
+  geom_area(aes(fill=factor(TERMREASON)))+
+  geom_line(aes(group=TERMREASON),position="stack")+
+  xlim(c(1975, 2018))
+```
+
+
+TERM Reasons:
+
+0. 
+1. Success
+2. 
+3. Disputed or Illegeal summit
+4. Poor Weather, and related issues
+5. Avalanche/Snow Fall
+6. Fatality
+7. illness/injury
+8. Supplies Problem
+9. Lack of time or too late in day
+10. Difficulty in route
+12. Did not attempt climb
+14. Unknown or misc. 
+
+```{r}
+rsns = c(4, 5, 6 ,7, 8, 9)
+rsns_legend=c("Weather",  "Avalanche or Snow Fall", "Fatality", "Illness or Injury", "Lack of Supplies", "Lack of Time")
+
+climberpeak2 %>% 
+  group_by(YEAR, TERMREASON) %>% 
+  filter(TERMREASON %in% rsns) %>% 
+  summarize(expeds = sum(n())) %>% 
+  ggplot(aes(x=YEAR, y=expeds, fill=factor(TERMREASON)))+
+  geom_area(aes(fill=factor(TERMREASON)))+
+  geom_line(aes(group=TERMREASON),position="stack")+
+  xlim(c(1975, 2018))+
+  scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)
+  
+```
+
+In this grpah we see that there has been an increase in failed expeditions in recent years.
+
+
+```{r}
+rsns = c(4, 5, 6 ,7, 8, 9)
+rsns_legend=c("Weather",  "Avalanche or Snow Fall", "Fatality", "Illness or Injury", "Lack of Supplies", "Lack of Time")
+
+climberpeak2 %>% 
+  filter(TERMREASON %in% rsns) %>% 
+  group_by(YEAR, TERMREASON) %>% 
+  summarize(expeds_term_year = sum(n())) %>% 
+  group_by(YEAR) %>% 
+  mutate(yearprop=expeds_term_year/sum(expeds_term_year)) %>% 
+  ggplot(aes(x=YEAR, yearprop, color=factor(TERMREASON)))+
+  geom_line(position="stack")+
+  geom_area(aes(fill=factor(TERMREASON)))+
+  xlim(c(1975, 2018))
+  
+  
+  
+```
+
+
+```{r}
+climberpeak2 %>% 
+  mutate(death=str_detect(TERMNOTE, "death"|"killed"|"fatal"|"disappeared"|"disappearence")) %>% 
+  replace_na(death=FALSE) %>% 
+  mutate(injury=str_detect(TERMNOTE, "injured"|""))
+  mutate(sickness=str_detect(TERMNOTE, "illness"|"sick"|"ill"|"sickness"|"infection"))
+```
 
