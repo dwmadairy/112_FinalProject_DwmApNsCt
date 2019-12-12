@@ -19,22 +19,23 @@ library(tidyverse)
 library(ggplot2)
 library(readr)
 library(leaflet)
+library(knitr)
 ```
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
 climberpeak <- read_csv("climberpeakV2.csv")
 ```
 
-## Introduction
+## **Introduction**
 In our project, we analyzed a robust dataset of Himalayan mountain expeditions. We were inspired to explore this field after reading numerous news articles about several factors making these expeditions more dangerous. Sherpa strikes, overcrowding on peaks, and especially climate change make these already harrowing journeys even more treacherous. Our data allows us to explore expeditions on hundreds of peaks from 1905 through 2018, so our goal in this blogpost is to attempt to align the recent research with concrete data analysis.
   
-## Research Questions
+## **Research Questions**
 Are recent factors like sherpa strikes, overcrowding, and climate change discouraging climbers from summiting Himalayan peaks? Do these recent factors lead to more injuries or deaths?
 	
-## Data Collection/Description
+## **Data Collection/Description**
 We utilized two datasets from “The Himalayan Database” in this project. Elizabeth Hawley began compiling an expedition archive for the Nepal Himalayan peaks in 1963, and this data set now contains over 450 peaks and over 10,000 expeditions. The main dataset we used contained these 10,000 expeditions, with several dozen variables to describe the expedition. We joined this dataset with another dataset that contained the names of the peaks the climbers’ explored, and we joined them through the common variable “Peak ID”. 
   
-## Climbing Over Time
+## **Climbing Over Time**
 First, it is important to show the amount of expeditions per year and which peaks are the most popular to climb within the dataset. Has climbing becoming more popular? Has reaching the peak become easier?
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -70,7 +71,7 @@ climberpeakV2 %>%
 
 The harsh drop in average percentage completion of expeditions in 2014 was due to first a large avalanche and then a Sherpa strike. As you can see from the size of the dot, a large amount of people still attempted expeditions during this year, but without the help of Sherpas, they were unable to complete as many expeditions as normal. 
 
-## Who Climbs and Where From?
+## **Who Climbs and Where From?**
 Another key introduction to the data is exploring where the climbers were from and how high each of them climbed over time.
 Altogether, people from 91 different nations have attempted to climb at least one of these peaks, according to this dataset. We made a visualization of how high each of these people climbed based on their country of origin.
 ```{r, echo=FALSE}
@@ -95,6 +96,21 @@ renderPlot({
       geom_smooth(aes(YEAR, HIGHPOINT))
   })
 ```
+
+
+```{r, warning = FALSE, message = FALSE}
+top_10_nations <-climberpeakV2 %>%
+  filter(YEAR >1980) %>%
+  group_by(NATION) %>% 
+  summarize(expeds=sum(n())) %>% 
+  #arrange(desc(expeds)) %>%
+  top_n(10) %>%
+  arrange(desc(expeds))
+
+kable(top_10_nations)
+```
+
+
 
 To reiterate, this dataset includes more than 450 peaks, even though some of them have only been attempted a few times. So, we found the top ten most popular peaks and used a Leaflet map to visualize the number of expeditions on these peaks as well as their summit success rate.
 
