@@ -16,6 +16,7 @@ library(foreign)
 library(tidyverse)
 library(ggplot2)
 library(readr)
+library(leaflet)
 ```
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE}
@@ -38,10 +39,6 @@ First, it is important to show the amount of expeditions per year and which peak
 ## Who Climbs and Where From?
 Another key introduction to the data is exploring where the climbers were from and how high each of them climbed over time.
 Altogether, people from 91 different nations have attempted to climb at least one of these peaks, according to this dataset. We made a visualization of how high each of these people climbed based on their country of origin.
-To reiterate, this dataset includes more than 450 peaks, even though some of them have only been attempted a few times. So, we found the top ten most popular peaks and used a Leaflet map to visualize the number of expeditions on these peaks as well as their summit success rate.
-
-
-
 ```{r, echo=FALSE}
 nation <-
   unique(climber$NATION) %>% 
@@ -65,6 +62,16 @@ renderPlot({
   })
 ```
 
+To reiterate, this dataset includes more than 450 peaks, even though some of them have only been attempted a few times. So, we found the top ten most popular peaks and used a Leaflet map to visualize the number of expeditions on these peaks as well as their summit success rate.
 
+```{r, echo=FALSE}
+peakcoords <- tibble(PKNAME = c("Everest", "Ama Dablam", "Cho Oyu", "Manaslu", "Lhotse", "Dhaulagiri I", "Makalu", "Baruntse", "Pumori", "Annapurna I"), long = c(86.925, 86.8612, 86.6585, 84.5597, 86.9336, 83.4873, 87.0912, 86.979649, 86.8253, 83.8203), lat = c(27.9881, 27.8619, 28.0973, 28.5497, 27.9626, 28.6985, 27.886, 27.872062, 28.009, 28.5961), peakheight = c(8850, 6814, 8188, 8163, 8516, 8167, 8485, 7152, 7138, 8091), expeds = c(2059, 1353, 1329, 632, 406, 381, 346, 307, 263, 240), success_rate = c("59.8%", "67.9%", "61.7%", "48.9%", "55.9%", "40.7%", "39.6%", "38.1%", "45.6%", "31.3%"))
+```
+
+```{r, echo=FALSE}
+leaflet(data = peakcoords) %>% 
+  addProviderTiles(providers$Stamen.Terrain) %>% 
+  addCircles(lng = ~long, lat = ~lat, popup = ~paste(PKNAME, " :", peakheight, "Meters, ", expeds, "Expeditions, ", success_rate, "Success Rate"), weight = 20)
+```
 
 
