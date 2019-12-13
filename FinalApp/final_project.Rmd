@@ -98,7 +98,7 @@ renderPlot({
 ```
 
 
-```{r, warning = FALSE, message = FALSE}
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
 top_10_nations <-climberpeakV2 %>%
   filter(YEAR >1980) %>%
   group_by(NATION) %>% 
@@ -122,6 +122,61 @@ peakcoords <- tibble(PKNAME = c("Everest", "Ama Dablam", "Cho Oyu", "Manaslu", "
 leaflet(data = peakcoords) %>% 
   addProviderTiles(providers$Stamen.Terrain) %>% 
   addCircles(lng = ~long, lat = ~lat, popup = ~paste(PKNAME, " :", peakheight, "Meters, ", expeds, "Expeditions, ", success_rate, "Success Rate"), weight = 20)
+```
+
+##*Reasons for Failure on the Mountains*
+
+```{r warning = FALSE, message = FALSE, echo=FALSE}
+rsns = c(4, 5, 6 ,7, 8, 9)
+rsns_legend=c("Weather",  "Avalanche or Snow Fall", "Fatality", "Illness or Injury", "Lack of Supplies", "Lack of Time")
+
+climberpeak %>% 
+  group_by(YEAR, TERMREASON) %>% 
+  filter(TERMREASON %in% rsns) %>% 
+  summarize(expeds = sum(n())) %>% 
+  ggplot(aes(x=YEAR, y=expeds, fill=factor(TERMREASON)))+
+  geom_area(aes(fill=factor(TERMREASON)))+
+  geom_line(aes(group=TERMREASON),position="stack")+
+  xlim(c(1975, 2018))+
+  scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)
+  
+```
+
+In this plot as expected we see that more expeditions are failing within the Himalayas, as we would expect as more and more expeditions are attempted. 
+
+In this plot we have a stacked plot that  shows the general reasons why expeditions fail overtime. In recent years there has been a general rise in weather related issues on the moutansin as well as increases in avalanches. We also see that fatalies remains relatively flat over time, but there is an increase in the number. 
+
+```{r}
+toppeaks<-climberpeak %>% 
+  group_by(PKNAME) %>% 
+  summarize(expeds = sum(n())) %>% 
+  arrange(desc(expeds)) %>% 
+  select(PKNAME) %>% 
+  head(n=15)
+ 
+```
+
+```{r}
+inputPanel(
+  selectInput("Mountain", "Mountain of Interest", toppeaks)
+)
+rsns = c(4, 5, 6 ,7, 8, 9)
+rsns_legend=c("Weather",  "Avalanche or Snow Fall", "Fatality", "Illness or Injury", "Lack of Supplies", "Lack of Time")
+
+renderPlot({
+  climberpeak %>% 
+    filter(PKNAME == input$Mountain) %>% 
+    filter(TERMREASON %in% rsns) %>% 
+    group_by(YEAR, TERMREASON) %>% 
+    summarize(expeds_term_year = sum(n())) %>% 
+    group_by(YEAR) %>% 
+    mutate(yearprop=expeds_term_year/sum(expeds_term_year)) %>% 
+    ggplot(aes(x=YEAR, yearprop, color=factor(TERMREASON)))+
+    geom_line(position="stack")+
+    geom_area(aes(fill=factor(TERMREASON)))+
+    xlim(c(1975, 2018))+
+    scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)
+  })
 ```
 
 

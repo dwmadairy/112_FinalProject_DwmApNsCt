@@ -193,7 +193,8 @@ In this grpah we see that there has been an increase in failed expeditions in re
 rsns = c(4, 5, 6 ,7, 8, 9)
 rsns_legend=c("Weather",  "Avalanche or Snow Fall", "Fatality", "Illness or Injury", "Lack of Supplies", "Lack of Time")
 
-climberpeak2 %>% 
+climberpeak %>% 
+  filter(PKNAME=="Everest") %>% 
   filter(TERMREASON %in% rsns) %>% 
   group_by(YEAR, TERMREASON) %>% 
   summarize(expeds_term_year = sum(n())) %>% 
@@ -202,12 +203,11 @@ climberpeak2 %>%
   ggplot(aes(x=YEAR, yearprop, color=factor(TERMREASON)))+
   geom_line(position="stack")+
   geom_area(aes(fill=factor(TERMREASON)))+
-  xlim(c(1975, 2018))
-  
-  
-  
-```
+  xlim(c(1975, 2018))+
+  scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)
 
+```
+In this plot we are looking at the reasons in which most expeditions fail in the himalayas. In  this plot we can generally see that there have been fewer expeditions that have ended due to fatalities in the mountains but more have failed due to injury and illness. 
 
 ```{r}
 climberpeak2 %>% 
@@ -215,5 +215,46 @@ climberpeak2 %>%
   replace_na(death=FALSE) %>% 
   mutate(injury=str_detect(TERMNOTE, "injured"|""))
   mutate(sickness=str_detect(TERMNOTE, "illness"|"sick"|"ill"|"sickness"|"infection"))
+```
+
+manyexpeds<-climberpeak %>% 
+  group_by(PKNAME) %>% 
+  mutate(expeds = sum(n())) %>% 
+  filter(expeds > 5) %>% 
+  ungroup()
+
+```{r}
+toppeaks<-climberpeak %>% 
+  group_by(PKNAME) %>% 
+  summarize(expeds = sum(n())) %>% 
+  arrange(desc(expeds)) %>% 
+  select(PKNAME) %>% 
+  head(n=15)
+ 
+```
+
+
+```{r}
+
+inputPanel(
+  selectInput("Mountain", "Mountain of Interest", toppeaks)
+)
+rsns = c(4, 5, 6 ,7, 8, 9)
+rsns_legend=c("Weather",  "Avalanche or Snow Fall", "Fatality", "Illness or Injury", "Lack of Supplies", "Lack of Time")
+
+renderPlot({
+  climberpeak %>% 
+    filter(PKNAME == input$Mountains) %>% 
+    filter(TERMREASON %in% rsns) %>% 
+    group_by(YEAR, TERMREASON) %>% 
+    summarize(expeds_term_year = sum(n())) %>% 
+    group_by(YEAR) %>% 
+    mutate(yearprop=expeds_term_year/sum(expeds_term_year)) %>% 
+    ggplot(aes(x=YEAR, yearprop, color=factor(TERMREASON)))+
+    geom_line(position="stack")+
+    geom_area(aes(fill=factor(TERMREASON)))+
+    xlim(c(1975, 2018))+
+    scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)
+  })
 ```
 
