@@ -43,6 +43,14 @@ climberpeak2 <- climberpeak %>%
   mutate(pctcomplete = HIGHPOINT/HEIGHTM)
 ```
 
+```{r}
+climberpeak2 %>%
+  group_by(PKNAME) %>%
+  summarise(Expeditions = sum(n()), o_2_rate = sum(O2USED/Expeditions)) %>%
+  filter(Expeditions > 99) %>%
+  arrange(desc(o_2_rate))
+```
+
 
 ```{r}
 manyexpeds<-climberpeak %>% 
@@ -55,7 +63,7 @@ manyexpeds<-climberpeak %>%
 ```{r}
 manyexpeds %>% 
   group_by(PKNAME) %>% 
-  summarize(expeds=sum(n()), success_rate = sum(SUCCESS1)/expeds) %>% 
+  summarize(expeds=sum(n()), success_rate = sum(SUCCESS1==TRUE)/expeds) %>% 
   arrange(desc(expeds))
 
 ```
