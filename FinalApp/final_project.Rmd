@@ -128,6 +128,8 @@ leaflet(data = peakcoords) %>%
   
 ```
 
+As shown in the leaflet, some of the most popular peaks have low success rate, like Aannapurna I, where only 1/3 of climbers reach the summit. Why do these climbers fail?
+
 ## **Reasons for Failure on the Mountains**
 
 ```{r warning = FALSE, message = FALSE, echo=FALSE}
@@ -185,5 +187,8 @@ renderPlot({
   })
 ```
 
+## **Conclusion**
+	
+	After our analysis of the data, we find it very important to note that each observation in our dataset is a human being. Many of these “observations” sustained injuries or even died on the Himalayan peaks. We hoped that this project investigated why these peaks have become more dangerous, and may serve to guide and warn future climbers.
 
 
