@@ -89,11 +89,12 @@ inputPanel(
   )
 
 renderPlot({
-    climberpeak %>% 
-      filter(NATION == input$nations) %>% 
-      ggplot() +
-      geom_point(aes(YEAR, HIGHPOINT)) +
-      geom_smooth(aes(YEAR, HIGHPOINT))
+    ggplot() +
+    geom_point(aes(YEAR, HIGHPOINT, color = SUCCESS1), data = climberpeak %>% 
+    filter(NATION == input$nations)) +
+    geom_smooth(aes(YEAR, HIGHPOINT, color = SUCCESS1), data = climberpeak %>%
+    filter(NATION == input$nations), se = FALSE) +
+    labs(title = "Distance Climbed by Nation", x = "Year", y = "Distance Climbed (m)")
   })
 ```
 
