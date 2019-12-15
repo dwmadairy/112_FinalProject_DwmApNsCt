@@ -58,14 +58,14 @@ climberpeakV2 %>%
 climberpeakV2 %>%
   group_by(YEAR) %>%
   filter(YEAR > 1970) %>%
-  mutate(expeds = sum(n())) %>%
+  mutate(Expeditions = sum(n())) %>%
   mutate(avg_complete = (mean(pctcomplete)*100)) %>%
   ggplot(aes(x = YEAR, y = avg_complete)) + 
-  geom_point(aes(size = expeds)) + 
+  geom_point(aes(size = Expeditions)) + 
   geom_line() +
   ggtitle("Average Percent Complete Expeditions by Year") + 
   xlab("Year") +
-  ylab("Average Percent Complete") 
+  ylab("Average Percent Complete")
 ```
 
 
@@ -89,11 +89,12 @@ inputPanel(
   )
 
 renderPlot({
-    climberpeak %>% 
-      filter(NATION == input$nations) %>% 
-      ggplot() +
-      geom_point(aes(YEAR, HIGHPOINT)) +
-      geom_smooth(aes(YEAR, HIGHPOINT))
+    ggplot() +
+    geom_point(aes(YEAR, HIGHPOINT, color = SUCCESS1), data = climberpeak %>% 
+    filter(NATION == input$nations)) +
+    geom_smooth(aes(YEAR, HIGHPOINT, color = SUCCESS1), data = climberpeak %>%
+    filter(NATION == input$nations), se = FALSE) +
+    labs(title = "Distance Climbed by Nation", x = "Year", y = "Distance Climbed (m)")
   })
 ```
 
@@ -118,11 +119,16 @@ To reiterate, this dataset includes more than 450 peaks, even though some of the
 peakcoords <- tibble(PKNAME = c("Everest", "Ama Dablam", "Cho Oyu", "Manaslu", "Lhotse", "Dhaulagiri I", "Makalu", "Baruntse", "Pumori", "Annapurna I"), long = c(86.925, 86.8612, 86.6585, 84.5597, 86.9336, 83.4873, 87.0912, 86.979649, 86.8253, 83.8203), lat = c(27.9881, 27.8619, 28.0973, 28.5497, 27.9626, 28.6985, 27.886, 27.872062, 28.009, 28.5961), peakheight = c(8850, 6814, 8188, 8163, 8516, 8167, 8485, 7152, 7138, 8091), expeds = c(2059, 1353, 1329, 632, 406, 381, 346, 307, 263, 240), success_rate = c("59.8%", "67.9%", "61.7%", "48.9%", "55.9%", "40.7%", "39.6%", "38.1%", "45.6%", "31.3%"))
 ```
 
+**Most Popular Peaks**
+*By Number of Expeditions; Label shows Peak Height (meters) and Summit Success Rate*
 ```{r, echo=FALSE}
 leaflet(data = peakcoords) %>% 
   addProviderTiles(providers$Stamen.Terrain) %>% 
-  addCircles(lng = ~long, lat = ~lat, popup = ~paste(PKNAME, " :", peakheight, "Meters, ", expeds, "Expeditions, ", success_rate, "Success Rate"), weight = 20)
+  addCircles(lng = ~long, lat = ~lat, popup = ~paste(PKNAME, " :", peakheight, "Meters, ", expeds, "Expeditions, ", success_rate, "Success Rate"), weight = 20) 
+  
 ```
+
+As shown in the leaflet, some of the most popular peaks have low success rate, like Aannapurna I, where only 1/3 of climbers reach the summit. Why do these climbers fail?
 
 ## **Reasons for Failure on the Mountains**
 
@@ -183,5 +189,8 @@ renderPlot({
   })
 ```
 
+## **Conclusion**
+	
+	After our analysis of the data, we find it very important to note that each observation in our dataset is a human being. Many of these “observations” sustained injuries or even died on the Himalayan peaks. We hoped that this project investigated why these peaks have become more dangerous, and may serve to guide and warn future climbers.
 
 
