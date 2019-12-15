@@ -124,7 +124,7 @@ leaflet(data = peakcoords) %>%
   addCircles(lng = ~long, lat = ~lat, popup = ~paste(PKNAME, " :", peakheight, "Meters, ", expeds, "Expeditions, ", success_rate, "Success Rate"), weight = 20)
 ```
 
-##*Reasons for Failure on the Mountains*
+## **Reasons for Failure on the Mountains**
 
 ```{r warning = FALSE, message = FALSE, echo=FALSE}
 rsns = c(4, 5, 6 ,7, 8, 9)
@@ -144,9 +144,11 @@ climberpeak %>%
 
 In this plot as expected we see that more expeditions are failing within the Himalayas, as we would expect as more and more expeditions are attempted. 
 
-In this plot we have a stacked plot that  shows the general reasons why expeditions fail overtime. In recent years there has been a general rise in weather related issues on the moutansin as well as increases in avalanches. We also see that fatalies remains relatively flat over time, but there is an increase in the number. 
+In this plot we have a stacked plot that shows the general reasons why expeditions fail overtime. In recent years there has been a general rise in weather related issues on the mountain as well as increases in avalanches. We also see that fatalities remains relatively flat over time, but there is an increase in the number of expeditions that fail due to illness or injury.
 
-```{r}
+
+
+```{r echo=FALSE}
 toppeaks<-climberpeak %>% 
   group_by(PKNAME) %>% 
   summarize(expeds = sum(n())) %>% 
@@ -156,7 +158,7 @@ toppeaks<-climberpeak %>%
  
 ```
 
-```{r}
+```{r echo=FALSE}
 inputPanel(
   selectInput("Mountain", "Mountain of Interest", toppeaks)
 )
@@ -173,10 +175,11 @@ renderPlot({
     mutate(yearprop=expeds_term_year/sum(expeds_term_year)) %>% 
     ggplot(aes(x=YEAR, yearprop, color=factor(TERMREASON)))+
     geom_line(position="stack")+
-    geom_area(aes(fill=factor(TERMREASON)))+
+    geom_area(aes(fill=factor(TERMREASON), show.legend=FALSE))+
     xlim(c(1975, 2018))+
     scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)
   })
 ```
+
 
 
