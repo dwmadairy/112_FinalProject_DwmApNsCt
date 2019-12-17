@@ -129,9 +129,10 @@ leaflet(data = peakcoords) %>%
   
 ```
 
-<<<<<<< HEAD
+
 As shown in the Leaflet, some of the most popular peaks have low success rate, like Annapurna I, where only 1/3 of climbers reach the summit. Why do these climbers fail?
-=======
+
+
 ```{r, echo = FALSE, message = FALSE}
 climberpeakV2 %>%
   group_by(PKNAME, YEAR) %>%
@@ -153,8 +154,7 @@ climberpeakV2 %>%
   ggtitle("Peak Popularity Over Time")
 ```
 
-As shown in the Leaflet, some of the most popular peaks have low success rate, like Aannapurna I, where only 1/3 of climbers reach the summit. Why do these climbers fail?
->>>>>>> 9b24466a7967987f42cea043227600e5b0c32855
+As shown in the Leaflet, some of the most popular peaks have low success rate, like Annapurna I, where only 1/3 of climbers reach the summit. Why do these climbers fail?
 
 ## **Reasons for Failure on the Mountains**
 
