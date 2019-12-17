@@ -197,21 +197,14 @@ toppeaks<-climberpeak %>%
 rsns = c(4, 5, 6 ,7, 8, 9)
 rsns_legend=c("Weather",  "Avalanche or Snow Fall", "Fatality", "Illness or Injury", "Lack of Supplies", "Lack of Time")
 
-terminations <- climberpeak %>% 
-  filter(TERMREASON %in% rsns) %>% 
-  group_by(YEAR, TERMREASON, PKNAME) %>% 
-  summarize(expeds_term_year = sum(n())) %>% 
-  group_by(YEAR) %>% 
-  mutate(yearprop=expeds_term_year/sum(expeds_term_year)) %>% 
-  ungroup()
-
 inputPanel(
   selectInput("Mountain", "Mountain of Interest", toppeaks)
 )
 
 renderPlot({
-  terminations %>% 
+  climberpeak %>% 
     filter(PKNAME == input$Mountain) %>% 
+    filter(TERMREASON %in% rsns) %>% 
     ggplot()+
     geom_bar(aes(x=YEAR, fill=factor(TERMREASON)), position="fill")+
     xlim(c(1975, 2018))+
