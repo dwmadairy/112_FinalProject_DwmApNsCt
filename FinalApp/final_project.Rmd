@@ -107,7 +107,7 @@ top_10_nations <-climberpeakV2 %>%
   summarize(Expeditions=sum(n())) %>% 
   #arrange(desc(expeds)) %>%
   top_n(10) %>%
-  arrange(desc(expeds))
+  arrange(desc(Expeditions))
 
 kable(top_10_nations)
 ```
