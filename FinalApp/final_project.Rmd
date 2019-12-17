@@ -1,11 +1,13 @@
 ---
-title: "The Himalayas: Understanding Summit Success"
+title: 'The Himalayas: Understanding Summit Success'
 author: "Charlie Thole, Natali Sorajja, Andrew Polk, Will Madairy"
 date: "12/17/2019"
 output:
   html_document:
     css: style.css
 runtime: shiny
+resource_files:
+- everest.png
 ---
 
 ```{r setup, include=FALSE}
