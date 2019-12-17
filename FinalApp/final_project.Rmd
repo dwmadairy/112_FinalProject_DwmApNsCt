@@ -28,6 +28,11 @@ climberpeak <- read_csv("climberpeakV2.csv")
 
 ## **Introduction**
 In our project, we analyzed a robust dataset of Himalayan mountain expeditions. We were inspired to explore this field after reading numerous news articles about several factors making these expeditions more dangerous. Sherpa strikes, overcrowding on peaks, and especially climate change make these already harrowing journeys even more treacherous. Our data allows us to explore expeditions on hundreds of peaks from 1905 through 2018, so our goal in this blogpost is to attempt to align the recent research with concrete data analysis.
+
+
+![Everest](/Users/andrew/Desktop/STAT112/112_FinalProject/everest.png)
+
+
   
 ## **Research Questions**
 Are recent factors like sherpa strikes, overcrowding, and climate change discouraging climbers from summiting Himalayan peaks? Do these recent factors lead to more injuries or deaths?
@@ -130,9 +135,6 @@ leaflet(data = peakcoords) %>%
 ```
 
 
-As shown in the Leaflet, some of the most popular peaks have low success rate, like Annapurna I, where only 1/3 of climbers reach the summit. Why do these climbers fail?
-
-
 ```{r, echo = FALSE, message = FALSE}
 climberpeakV2 %>%
   group_by(PKNAME, YEAR) %>%
@@ -154,7 +156,9 @@ climberpeakV2 %>%
   ggtitle("Peak Popularity Over Time")
 ```
 
+
 As shown in the Leaflet, some of the most popular peaks have low success rate, like Annapurna I, where only 1/3 of climbers reach the summit. Why do these climbers fail?
+
 
 ## **Reasons for Failure on the Mountains**
 
