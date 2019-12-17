@@ -74,6 +74,7 @@ The harsh drop in average percentage completion of expeditions in 2014 was due t
 ## **Who Climbs and Where From?**
 Another key introduction to the data is exploring where the climbers were from and how high each of them climbed over time.
 Altogether, people from 91 different nations have attempted to climb at least one of these peaks, according to this dataset. We made a visualization of how high each of these people climbed based on their country of origin.
+
 ```{r, echo=FALSE}
 nation <-
   unique(climberpeak$NATION) %>% 
