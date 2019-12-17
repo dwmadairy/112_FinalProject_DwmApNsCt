@@ -219,9 +219,13 @@ renderPlot({
 After our analysis of the data, we find it very important to note that each observation in our dataset is a human being. Many of these “observations” sustained injuries or even died on the Himalayan peaks. We hoped that this project investigated why these peaks have become more dangerous, and may serve to guide and warn future climbers. 
 
 Our main conclusions include:
-- Total expeditions declined drastically in 2014 due to sherpa strikes, and the number has not fully recovered in recent years
-- Our data includes climbers from dozens of nations, with United States, Japan, and the U.K. representing the most climbers in the dataset, showing climbers come from all around the world to attempt a summit of the Himalayans
-- Specific peaks, like Cho Oyu and Lhotse, have experienced decreases in total expeditions, which aligns with research about foot traffic and prices of climbing
-- Weather as a termination reason has increased over time, but on Everest, weather-related termination has slowed while injury and avalanche-related injuries have increased.
+
+* Total expeditions declined drastically in 2014 due to sherpa strikes, and the number has not fully recovered in recent years
+
+* Our data includes climbers from dozens of nations, with United States, Japan, and the U.K. representing the most climbers in the dataset, showing climbers come from all around the world to attempt a summit of the Himalayans
+
+* Specific peaks, like Cho Oyu and Lhotse, have experienced decreases in total expeditions, which aligns with research about foot traffic and prices of climbing
+
+* Weather as a termination reason has increased over time, but on Everest, weather-related termination has slowed while injury and avalanche-related injuries have increased.
 
 
