@@ -74,6 +74,7 @@ The harsh drop in average percentage completion of expeditions in 2014 was due t
 ## **Who Climbs and Where From?**
 Another key introduction to the data is exploring where the climbers were from and how high each of them climbed over time.
 Altogether, people from 91 different nations have attempted to climb at least one of these peaks, according to this dataset. We made a visualization of how high each of these people climbed based on their country of origin.
+
 ```{r, echo=FALSE}
 nation <-
   unique(climberpeak$NATION) %>% 
@@ -163,9 +164,9 @@ climberpeak %>%
   summarize(expeds = sum(n())) %>% 
   ggplot(aes(x=YEAR, y=expeds, fill=factor(TERMREASON)))+
   geom_area(aes(fill=factor(TERMREASON)))+
-  geom_line(aes(group=TERMREASON),position="stack")+
   xlim(c(1975, 2018))+
-  scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)
+  scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)+
+  labs(x="Year",y="Expeditions")
   
 ```
 
@@ -182,7 +183,6 @@ toppeaks<-climberpeak %>%
   arrange(desc(expeds)) %>% 
   select(PKNAME) %>% 
   head(n=15)
- 
 ```
 
 ```{r echo=FALSE}
@@ -200,13 +200,15 @@ renderPlot({
     summarize(expeds_term_year = sum(n())) %>% 
     group_by(YEAR) %>% 
     mutate(yearprop=expeds_term_year/sum(expeds_term_year)) %>% 
-    ggplot(aes(x=YEAR, yearprop, color=factor(TERMREASON)))+
-    geom_line(position="stack")+
-    geom_area(aes(fill=factor(TERMREASON), show.legend=FALSE))+
+    ggplot(aes(x=YEAR, yearprop))+
+    geom_line(position="stack", show.legend=FALSE)+
+    geom_area(aes(fill=factor(TERMREASON)))+
     xlim(c(1975, 2018))+
-    scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)
+    scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)+
+    labs(x="Year", y="Proportion of Failures")
   })
 ```
+
 
 ## **Conclusion**
 	
