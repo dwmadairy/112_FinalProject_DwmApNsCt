@@ -128,6 +128,27 @@ leaflet(data = peakcoords) %>%
   
 ```
 
+```{r, echo = FALSE, message = FALSE}
+climberpeakV2 %>%
+  group_by(PKNAME, YEAR) %>%
+  mutate(expeditions = sum(n())) %>%
+  filter(PKNAME == "Everest"
+         |PKNAME == "Ama Dablam"
+         |PKNAME == "Cho Oyu"
+         |PKNAME == "Annapurna I"
+         |PKNAME == "Lhotse"
+         |PKNAME == "Makalu"
+         |PKNAME == "Pumori"
+         |PKNAME == "Baruntse"
+         |PKNAME == "Dhaulagiri I"
+         |PKNAME == "Manaslu") %>%
+  filter(YEAR > 1975) %>%
+  ggplot(aes(x = YEAR, y = expeditions, color = PKNAME)) + 
+  geom_smooth(se = FALSE) +
+  labs(x = "Year", y = "Expeditions", color = "Peak Name") + 
+  ggtitle("Peak Popularity Over Time")
+```
+
 As shown in the Leaflet, some of the most popular peaks have low success rate, like Aannapurna I, where only 1/3 of climbers reach the summit. Why do these climbers fail?
 
 ## **Reasons for Failure on the Mountains**
