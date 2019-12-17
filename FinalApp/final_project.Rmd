@@ -196,25 +196,27 @@ toppeaks<-climberpeak %>%
 ```
 
 ```{r echo=FALSE}
-inputPanel(
-  selectInput("Mountain", "Mountain of Interest", toppeaks)
-)
 rsns = c(4, 5, 6 ,7, 8, 9)
 rsns_legend=c("Weather",  "Avalanche or Snow Fall", "Fatality", "Illness or Injury", "Lack of Supplies", "Lack of Time")
 
+terminations <- climberpeak %>% 
+  filter(TERMREASON %in% rsns) %>% 
+  group_by(YEAR, TERMREASON, PKNAME) %>% 
+  summarize(expeds_term_year = sum(n())) %>% 
+  group_by(YEAR) %>% 
+  mutate(yearprop=expeds_term_year/sum(expeds_term_year)) %>% 
+  ungroup()
+
+inputPanel(
+  selectInput("Mountain", "Mountain of Interest", toppeaks)
+)
+
 renderPlot({
-  climberpeak %>% 
+  terminations %>% 
     filter(PKNAME == input$Mountain) %>% 
-    filter(TERMREASON %in% rsns) %>% 
-    group_by(YEAR, TERMREASON) %>% 
-    summarize(expeds_term_year = sum(n())) %>% 
-    group_by(YEAR) %>% 
-    mutate(yearprop=expeds_term_year/sum(expeds_term_year)) %>% 
-    ggplot(aes(x=YEAR, yearprop))+
-    geom_line(position="stack", show.legend=FALSE)+
-    geom_area(aes(fill=factor(TERMREASON)))+
+    ggplot()+
+    geom_bar(aes(x=YEAR, fill=factor(TERMREASON)), position="fill")+
     xlim(c(1975, 2018))+
-    scale_fill_discrete(name="Termination Reason", breaks=rsns, labels=rsns_legend)+
     labs(x="Year", y="Proportion of Failures")
   })
 ```
